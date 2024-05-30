@@ -48,7 +48,7 @@ WORKDIR /app
 
 
 # Don't run production as root
-COPY --from=installer /app/apps/client/next.config.js ./next.config.js 
+# COPY --from=installer /app/apps/client/next.config.js ./next.config.js 
 
 # Automatically leverage output traces to reduce image size
 COPY --from=installer /app/apps/client/.next ./.next
