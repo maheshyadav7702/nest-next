@@ -1,0 +1,57 @@
+# This workflow will build and push a new container image to Amazon ECR,
+# To use this workflow, you will need to complete the following set-up steps:
+#
+# 1. Create an ECR repository to store your images.
+#    For example: `aws ecr create-repository --repository-name my-ecr-repo --region us-east-2`.
+#    Replace the value of the `ECR_REPOSITORY` environment variable in the workflow below with your repository's name.
+#    Replace the value of the `AWS_REGION` environment variable in the workflow below with your repository's region.
+#
+# 2. Store an IAM user access key in GitHub Actions secrets named `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`.
+#    See the documentation for each action used below for the recommended IAM policies for this IAM user,
+#    and best practices on handling the access key credentials.
+
+name: Deploy to DEV
+
+on:
+  push:
+    branches: ["master"]
+
+env:
+  AWS_REGION: ap-south-1 # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: mahesh-project # set this to your Amazon ECR repository name
+  IMAGE_TAG: ${{ github.sha }}
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ["self-hosted", "first-instance"]
+    #while connecting given the lable name
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: 767397839752.dkr.ecr.ap-south-1.amazonaws.com/mahesh-project
+
+        run: |
+          # Build a docker container and
+          # push it to ECR so that it can
+          # be deployed to ECS.
+          #docker-compose -f ./test.prod.yml build
+          docker build -t $ECR_REGISTRY:core-app-$IMAGE_TAG -f container/Dockerfile.client.prod . --no-cache
+          docker build -t $ECR_REGISTRY:core-api-$IMAGE_TAG -f container/Dockerfile.api.prod . --no-cache
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 767397839752.dkr.ecr.ap-south-1.amazonaws.com
+          docker push $ECR_REGISTRY:core-api-$IMAGE_TAG
+          docker push $ECR_REGISTRY:core-app-$IMAGE_TAG
+      # - name: building Container
+      #   run: |
+      #     sudo cp /home/ubuntu/micro-service-dev/core-docker-compose.yml .
+      #     docker-compose -f core-docker-compose.yml up -d | echo y
