@@ -46,11 +46,11 @@ jobs:
           # push it to ECR so that it can
           # be deployed to ECS.
           #docker-compose -f ./test.prod.yml build
-          docker build --build-arg -t $ECR_REGISTRY:core-app-$IMAGE_TAG -f container/Dockerfile.client.prod . --no-cache
-          docker build -t $ECR_REGISTRY:core-api-$IMAGE_TAG -f container/Dockerfile.api.prod . --no-cache
+          docker build -t $ECR_REGISTRY:core-app-v1 -f container/Dockerfile.client.prod . --no-cache
+          docker build -t $ECR_REGISTRY:core-api-v1 -f container/Dockerfile.api.prod . --no-cache
           aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 767397839752.dkr.ecr.ap-south-1.amazonaws.com
-          docker push $ECR_REGISTRY:core-app-$IMAGE_TAG
-          docker push $ECR_REGISTRY:core-api-$IMAGE_TAG
+          docker push $ECR_REGISTRY:core-app-v1
+          docker push $ECR_REGISTRY:core-api-v1
 
       # - name: building Container
       #   run: |
