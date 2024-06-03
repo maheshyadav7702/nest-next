@@ -1,5 +1,5 @@
 FROM node:18-alpine AS base
-
+RUN npm install -g npm@10.2.4
 FROM base AS builder
 RUN apk add --no-cache libc6-compat
 RUN apk update
@@ -58,7 +58,7 @@ RUN true
 #COPY --from=installer /app/apps/core-app-service/node_modules ./node_modules
 RUN npm install
 
-EXPOSE 3030
+EXPOSE 3000
 
 # ENV PORT 3030
 

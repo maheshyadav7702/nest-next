@@ -2,7 +2,7 @@
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 FROM node:18-alpine AS base
-
+RUN npm install -g npm@10.2.4
 FROM base AS builder
 RUN apk add --no-cache libc6-compat
 RUN apk update
@@ -29,5 +29,5 @@ WORKDIR /app
 COPY --from=installer /app/node_modules ./node_modules
 COPY --from=installer /app/apps/api/dist ./dist
 COPY --from=installer /app/apps/api/dist/templates ./dist/src/templates
-EXPOSE 3050
+EXPOSE 3001
 CMD [ "node", "dist/src/main.js" ]
