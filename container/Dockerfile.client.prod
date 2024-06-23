@@ -11,7 +11,7 @@ COPY turbo.json ./
 COPY ./apps/client ./apps/client
 
 
-RUN npx turbo prune --scope="client" --docker
+# RUN npx turbo prune --scope="client" --docker
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
