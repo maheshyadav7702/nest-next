@@ -1,0 +1,9 @@
+From node:alpine3.18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install -g turbo
+# RUN npm install
+COPY turbo.json ./
+COPY ./apps/client ./apps/client
+EXPOSE 3000
+CMD ["npm", "run", "start"]
