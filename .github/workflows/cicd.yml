@@ -2,7 +2,7 @@ name: Deploy Dev
 'on':
   push:
     branches:
-      - main
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,9 +14,9 @@ jobs:
           docker login -u ${{secrets.DOCKERHUB_USER_NAME}} -p
           ${{secrets.DOCKERHUB_PASSWORD}}
       - name: Build Docker Image
-        run: >-
-          docker build -t maheshyadav7702/next-nest
-          ../container/Dockerfile.client.prod
+        run: |
+          docker build -t maheshyadav7702/next-nest -f container/Dockerfile.client.prod . --no-cache
+          docker build -t maheshyadav7702/next-nest -f container/Dockerfile.api.prod . --no-cache
       - name: Publish  Image to docker hub
         run: 'docker push maheshyadav7702/next-nest:latest'
   deploy:
