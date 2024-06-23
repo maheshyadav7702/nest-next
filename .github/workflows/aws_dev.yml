@@ -10,11 +10,11 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Deploy to DEV
+name: Deploy to DEV duplicate
 
 on:
   push:
-    branches: ["master"]
+    branches: ["main"]
 
 env:
   AWS_REGION: ap-south-1 # set this to your preferred AWS region, e.g. us-west-1
