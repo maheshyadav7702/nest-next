@@ -16,7 +16,7 @@ jobs:
       - name: Build Docker Image
         run: >-
           docker build -t maheshyadav7702/next-nest
-          ../container/Dockerfile.client.prod
+          .
       - name: Publish  Image to docker hub
         run: 'docker push maheshyadav7702/next-nest:latest'
   deploy:
