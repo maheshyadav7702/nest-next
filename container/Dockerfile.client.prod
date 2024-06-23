@@ -38,7 +38,7 @@ RUN npm install
 # RUN echo "TEST1 $NEXT_PUBLIC_SIMPLE_VAR"
 # RUN echo "TEST2 $NEXT_PUBLIC_CONTAINER_ENV_VAR"
 
-RUN npx turbo run build --filter=client
+# RUN npx turbo run build --filter=client
 # RUN npm ci --omit=dev && npm cache clean --force
 
 
