@@ -15,7 +15,8 @@ jobs:
           ${{secrets.DOCKERHUB_PASSWORD}}
       - name: Build Docker Image
         run: |
-          docker build -t maheshyadav7702/next-nest -f container/Dockerfile.api.dev . --no-cache
+          docker build -t client-app -f container/Dockerfile.api.dev . --no-cache
+        #   docker build -t $ECR_REGISTRY:core-api-v1 -f container/Dockerfile.api.prod . --no-cache
         #   docker build -t maheshyadav7702/next-nest -f container/Dockerfile.api.prod . --no-cache
       - name: Publish  Image to docker hub
         run: 'docker push maheshyadav7702/next-nest:latest'
