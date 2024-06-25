@@ -15,10 +15,12 @@ jobs:
           ${{secrets.DOCKERHUB_PASSWORD}}
       - name: Build Docker Image
         run: |
-          docker build -t client -f /container/Dockerfile.client.prod . --no-cache
-          docker build -t api -f /container/Dockerfile.api.prod . --no-cache
+          docker build -t maheshyadav7702/next-nest:client-v1 -f container/Dockerfile.client.prod . --no-cache
+          docker build -t maheshyadav7702/next-nest:api-v1 -f container/Dockerfile.api.prod . --no-cache
       - name: Publish  Image to docker hub
-        run: "docker push maheshyadav7702/next-nest:latest"
+        run: 
+          docker push maheshyadav7702/next-nest:client-v1
+          docker push maheshyadav7702/next-nest:api-v1
   deploy:
     needs: build
     runs-on: self-hosted
