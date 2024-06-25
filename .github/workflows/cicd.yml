@@ -15,8 +15,8 @@ jobs:
           ${{secrets.DOCKERHUB_PASSWORD}}
       - name: Build Docker Image
         run: |
-          docker build -t client -f ../container/Dockerfile.client.prod . --no-cache
-          docker build -t api -f ../container/Dockerfile.api.prod . --no-cache
+          docker build -t client -f /container/Dockerfile.client.prod . --no-cache
+          docker build -t api -f /container/Dockerfile.api.prod . --no-cache
       - name: Publish  Image to docker hub
         run: "docker push maheshyadav7702/next-nest:latest"
   deploy:
