@@ -21,7 +21,7 @@ WORKDIR /app
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 #COPY --from=builder /apps/out/json/ .
-COPY --from=builder /apps/out/package-lock.json ./package-lock.json
+COPY --from=builder /app/package-lock.json ./package-lock.json
 RUN npm install turbo
 RUN npm install
 # Build the project
