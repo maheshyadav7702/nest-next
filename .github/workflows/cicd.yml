@@ -1,5 +1,5 @@
 name: Deploy Dev
-'on':
+"on":
   push:
     branches:
       - master
@@ -15,17 +15,17 @@ jobs:
           ${{secrets.DOCKERHUB_PASSWORD}}
       - name: Build Docker Image
         run: |
-          docker build -t core-api-v1 -f container/Dockerfile.client.prod . --no-cache
-        #   docker build -t maheshyadav7702/next-nest -f container/Dockerfile.api.prod . --no-cache
+          docker build -t client -f ../container/Dockerfile.client.prod . --no-cache
+          docker build -t api -f ../container/Dockerfile.api.prod . --no-cache
       - name: Publish  Image to docker hub
-        run: 'docker push maheshyadav7702/next-nest:latest'
+        run: "docker push maheshyadav7702/next-nest:latest"
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
-        run: 'docker pull maheshyadav7702/next-nest:latest'
+        run: "docker pull maheshyadav7702/next-nest:latest"
       - name: Run Docker Container
-        run: >-
+        run: |
           docker run -d -p 3000:3000 --name next-app-container -e
           MONGO_PASSWORD='${{secrets.MONGO_PASSWORD}}' maheshyadav7702/next-nest
