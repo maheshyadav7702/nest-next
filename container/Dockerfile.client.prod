@@ -25,7 +25,7 @@ COPY --from=builder /app/out/package-lock.json ./package-lock.json
 RUN npm install turbo
 RUN npm install
 # Build the project
-COPY --from=builder /app/out/full/ .
+# COPY --from=builder /app/out/full/ .
 
 
 
