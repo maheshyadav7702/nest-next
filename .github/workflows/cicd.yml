@@ -1,4 +1,4 @@
-name: Deploy Dev
+name: Deploy to Dev 
 'on':
   push:
     branches:
@@ -10,22 +10,23 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v4
       - name: Login to docker hub
-        run: >-
-          docker login -u ${{secrets.DOCKERHUB_USER_NAME}} -p
-          ${{secrets.DOCKERHUB_PASSWORD}}
+        run:  docker login -u ${{secrets.DOCKERHUB_USER_NAME}} -p ${{secrets.DOCKERHUB_PASSWORD}}
       - name: Build Docker Image
         run: |
-          docker build -t core-api-v1 -f container/Dockerfile.client.prod . --no-cache
-        #   docker build -t maheshyadav7702/next-nest -f container/Dockerfile.api.prod . --no-cache
+          docker build -t maheshyadav7702/nextjs-app ./container/Dockerfile.client1.dev 
+          docker build -t maheshyadav7702/nestjs-app ./container/Dockerfile.api1.dev
       - name: Publish  Image to docker hub
-        run: 'docker push maheshyadav7702/next-nest:latest'
+        run: |
+          docker push maheshyadav7702/nextjs-app:latest
+          docker push maheshyadav7702/nestjs-app:latest
+
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
-        run: 'docker pull maheshyadav7702/next-nest:latest'
+        run: |
+          docker pull maheshyadav7702/nextjs-app:latest
+          docker pull maheshyadav7702/nestjs-app:latest
       - name: Run Docker Container
-        run: >-
-          docker run -d -p 3000:3000 --name next-app-container -e
-          MONGO_PASSWORD='${{secrets.MONGO_PASSWORD}}' maheshyadav7702/next-nest
+        run: docker run -d -p 3000:3000 --name mahesh01
