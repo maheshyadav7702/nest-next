@@ -12,16 +12,16 @@ jobs:
       - name: Login to docker hub
         run:  docker login -u ${{secrets.DOCKERHUB_USER_NAME}} -p ${{secrets.DOCKERHUB_PASSWORD}}
       - name: Build Docker Image
-        run:  docker build -t maheshyadav7702/next-nest-app .
+        run:  docker build -t maheshyadav7702/next-nest-app1 .
       - name: Publish  Image to docker hub
-        run: docker push maheshyadav7702/next-nest-app:latest
+        run: docker push maheshyadav7702/next-nest-app1:latest
 
   deploy:
     needs: build
     runs-on: self-hosted
     steps:
       - name: Pull image from docker hub
-        run: docker pull maheshyadav7702/next-nest-app:latest
+        run: docker pull maheshyadav7702/next-nest-app1:latest
         
       - name: Run Docker Container
-        run: docker run -d --name mahesh02 -p 3000:3000 maheshyadav7702/next-nest-app
+        run: docker run -d --name mahesh03 -p 3000:3000 maheshyadav7702/next-nest-app1
