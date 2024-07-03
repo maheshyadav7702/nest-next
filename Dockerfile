@@ -11,7 +11,7 @@ COPY package*.json ./
 COPY turbo.json ./
 COPY ./apps ./apps
 
-RUN npx turbo prune --scope="apps" --docker
+
 
 RUN npm install
 
