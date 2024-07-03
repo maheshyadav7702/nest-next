@@ -8,7 +8,7 @@ RUN npm install -g turbo
 COPY package*.json ./
 COPY turbo.json ./
 RUN npm install
-COPY ./apps/client ./app/client
+COPY ./apps/client ./apps/client
 
 EXPOSE 3000
 
