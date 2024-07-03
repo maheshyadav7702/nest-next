@@ -24,4 +24,4 @@ jobs:
         run: docker pull maheshyadav7702/next-nest-app:latest
         
       - name: Run Docker Container
-        run: docker run -d --name mahesh01 -p 3000:3000 maheshyadav7702/next-nest-app
+        run: docker run -d --name mahesh02 -p 3000:3000 maheshyadav7702/next-nest-app
